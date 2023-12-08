@@ -66,6 +66,8 @@ const command: Command = {
         if (!queueData) {
             return await client.utils.embeds.SimpleEmbed(interaction, { title: "Coaching System", text: "Queue Could not be Found.", empheral: true });
         }
+
+        await queueData.kickNonServerMembers(g);
         if (queueData.isEmpty()) {
             return await client.utils.embeds.SimpleEmbed(interaction, { title: "Coaching System", text: "The Queue is Empty", empheral: true });
         }
@@ -121,7 +123,7 @@ const command: Command = {
                         },
                     );
                 } else {
-                    spawner.name = spawner.name ?? `${member.displayName}' ${queueData.name} Room ${coachingSession.getRoomAmount() + 1}`;
+                    spawner.name = spawner.name ?? `${member.displayName}${member.displayName.endsWith("s") ? "'" : "s'"} ${queueData.name} Room ${coachingSession.getRoomAmount() + 1}`;
                 }
                 spawner.permission_overwrites = new mongoose.Types.DocumentArray([
                     {
